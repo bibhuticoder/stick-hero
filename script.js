@@ -121,7 +121,7 @@ $(window).load(function () {
         maxWidth: 100,
         minDistance: 100,
         maxDistance: 500,
-        leftMargin: 100,
+        leftMargin: 500,
         color: 'black',
         center: {
             width: 15,
@@ -133,7 +133,7 @@ $(window).load(function () {
     };
 
     var cherry = {
-        size: 5,
+        size: 10,
         color: "red",
         state: 0,
         x: 0,
@@ -142,10 +142,16 @@ $(window).load(function () {
 
         drawCherry: function () {
 
+
+        	var img = new Image();
+        	img.src = 'img/cherry.png';
+
             if (cherry.state) {
-                ctx.beginPath();
-                ctx.arc(cherry.x, cherry.y, cherry.size, 0, 2 * Math.PI);
-                ctx.fill();
+                // ctx.beginPath();
+                // ctx.arc(cherry.x, cherry.y, cherry.size, 0, 2 * Math.PI);
+                // ctx.stroke();
+
+                ctx.drawImage(img, cherry.x - cherry.size, cherry.y - cherry.size, cherry.size*2, cherry.size*2);
 
                 if (cherry.x > player.x && cherry.x < player.x + player.width && player.pos === 'down') {
                     cherry.state = 0;
@@ -179,8 +185,10 @@ $(window).load(function () {
         player.state = 'rest';
         stick.state = 'rest';
         wall.state = 'rest';
+        cherry.state = 0;
         player.pos = 'up';
-        wall.maxDistance = height / 2;
+        wall.maxDistance = height/2;
+        wall.leftMargin = width/2 - wall.maxWidth;
         wall.y = height / 1.5;
         cherry.y = wall.y + 2 * cherry.size;
 
@@ -382,8 +390,13 @@ $(window).load(function () {
         ctx.fillStyle = 'black';
         ctx.font = "20px cursive";
         ctx.fillText("Score  : " + score, 50, 50);
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = 'dodgerblue';
         ctx.fillText("Cherry : " + cherry.cherries, 50, 80);
+    }
+
+
+    function drawBallons(){
+    	
     }
 
     function generateWall() {
